@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Npgsql;
 using System.Data;
 
 namespace OnlyTutorsBackEnd.Models
@@ -16,7 +17,7 @@ namespace OnlyTutorsBackEnd.Models
 
         public IDbConnection CreateConnection()
         {
-            return new SqlConnection(_connectionString);
+            return new NpgsqlConnection(_connectionString);
         }
     }
 }

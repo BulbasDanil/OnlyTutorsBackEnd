@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "adCaxc9yQ7pTTJmU/8pWil9crH/9YJI0xXmiJ3MoWNuzWVoxZpgSYgm047ElOIOTuuFDGa4PIWB69dDcBf3y5g==",
+  "dgSpecHash": "97P3yTVaFAJRlVwgG7RnjJtWemGS0myBlT95xDYE4LJWcxaLDRxQY1sw/yEccY3nDyM+VVW1ZU/GCjnTdKYTAA==",
   "success": true,
   "projectFilePath": "C:\\Work\\C#\\Git\\OnlyTutorsBackEnd\\OnlyTutorsBackEnd\\OnlyTutorsBackEnd.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\npgsql\\6.0.10\\npgsql.6.0.10.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
