@@ -15,12 +15,15 @@ namespace OnlyTutorsBackEnd.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public async Task<IActionResult> GetUsers()
         {
             try
             {
                 var users = await _userRepository.GetUsers();
+                if(users.Count() <= 0)
+                    return NotFound();
+
                 return Ok(users);
             }
             catch (Exception ex)
@@ -29,25 +32,81 @@ namespace OnlyTutorsBackEnd.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostUser()
+        [HttpGet("{id}", Name = "UserById")]
+        public async Task<IActionResult> GetUser(int id)
         {
             try
             {
-                User a = new User()
-                {
-                    Id = 123,
-                    Name = "Zalupkin",
-                    Surname = "Pivkin",
-                    Email = "123@gmail.com",
-                    PhoneNumber = "1337",
-                    Password = "123",
-                    DateOfBirth = DateTime.Now,
-                    Rating = 4.5f
-                };
+                var user = await _userRepository.GetById(id);
+                if(user == null)
+                    return NotFound();
+                    
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-                await _userRepository.InsertUser(a);
+        [HttpPost]
+        public async Task<IActionResult> PostUser(User user)
+        {
+            try
+            {
+                if (await _userRepository.InsertUser(user) == -1)
+                    throw new Exception("Cannot insert user");
+
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutUser(User user)
+        {
+            try
+            {
+                if (await _userRepository.UpdateUser(user, user.Id) == -1)
+                    throw new Exception("Cannot update user");
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                if (await _userRepository.RemoveUser(id) == -1)
+                    throw new Exception("Cannot remove user");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("{email}/{password}", Name = "ValidateLogin")]
+        public async Task<IActionResult> ValidateUserLogin(string email, string password)
+        {
+            try
+            {
+                int resultId = await _userRepository.ValidateUserLogin(email, password);
+                if (resultId == -1)
+                    throw new Exception("Wrong email or password");
+
+                return Ok(resultId);
             }
             catch (Exception ex)
             {
