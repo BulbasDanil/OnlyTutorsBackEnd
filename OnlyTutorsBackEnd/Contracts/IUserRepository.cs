@@ -9,6 +9,6 @@ namespace OnlyTutorsBackEnd.Contracts
         public Task<int> InsertUser(User user);
         public Task<int> UpdateUser(User user, int userid);  
         public Task<int> RemoveUser(int userid);
-        public Task<int> ValidateUserLogin(string email, string passwordHash);
+        public Task<LoginResult> ValidateUserLogin(string email, string passwordHash);
     }
 }

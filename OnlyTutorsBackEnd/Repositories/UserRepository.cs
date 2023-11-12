@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using NpgsqlTypes;
 using OnlyTutorsBackEnd.Contracts;
 using OnlyTutorsBackEnd.Models;
 using System.Data;
@@ -29,7 +28,7 @@ namespace OnlyTutorsBackEnd.Repositories
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 return Enumerable.Empty<User>();
             }
         }
@@ -52,15 +51,16 @@ namespace OnlyTutorsBackEnd.Repositories
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 return new User();
             }
         }
 
         public async Task<int> InsertUser(User user)
         {
-            string query = "INSERT INTO Users (Name, Surname, Email,Password, PhoneNumber, DateOfBirth, Rating) " +
-                "VALUES (@Name, @Surname, @Email, @Password, @PhoneNumber, @DateOfBirth, @Rating)";
+            string query = "INSERT INTO Users (Name, Surname, Email,Password, PhoneNumber, DateOfBirth, Rating, ImagePath) " +
+                "VALUES (@Name, @Surname, @Email, @Password, @PhoneNumber, @DateOfBirth, @Rating, @ImagePath)" +
+                "RETURNING Id";
 
             var parameters = new DynamicParameters();
             parameters.Add("Name", user.Name, DbType.String);
@@ -70,20 +70,22 @@ namespace OnlyTutorsBackEnd.Repositories
             parameters.Add("PhoneNumber", user.PhoneNumber, DbType.String);
             parameters.Add("DateOfBirth", user.DateOfBirth, DbType.Date);
             parameters.Add("Rating", user.Rating, DbType.Decimal);
-
+            parameters.Add("ImagePath", user.ImagePath, DbType.String);
             try
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    if (await connection.ExecuteAsync(query, parameters) > 0)
-                        return 1;
-                    else 
+                    int insertedId = (await connection.QueryAsync<User>(query, parameters)).First().Id;
+
+                    if (insertedId >= 0)
+                        return insertedId;
+                    else
                         return -1;
                 }
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 return -1;
             }
         }
@@ -91,7 +93,7 @@ namespace OnlyTutorsBackEnd.Repositories
         public async Task<int> UpdateUser(User user, int userid)
         {
             string query = "UPDATE Users Set " +
-                "Name = @Name, Surname = @Surname, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber, DateOfBirth = @DateOfBirth, Rating = @Rating " +
+                "Name = @Name, Surname = @Surname, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber, DateOfBirth = @DateOfBirth, Rating = @Rating, ImagePath = @ImagePath " +
                 "WHERE Id = @userid";
             
             var parameters = new DynamicParameters();
@@ -103,6 +105,7 @@ namespace OnlyTutorsBackEnd.Repositories
             parameters.Add("DateOfBirth", user.DateOfBirth, DbType.Date);
             parameters.Add("userid", userid, DbType.Int32);
             parameters.Add("Rating", user.Rating, DbType.Decimal);
+            parameters.Add("ImagePath", user.ImagePath, DbType.String);
 
             try
             {
@@ -116,7 +119,7 @@ namespace OnlyTutorsBackEnd.Repositories
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 return -1;
             }
         }
@@ -140,13 +143,13 @@ namespace OnlyTutorsBackEnd.Repositories
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
                 return -1;
             }
         }
 
         // todo: move validate password function to the database functions
-        public async Task<int> ValidateUserLogin(string email, string passwordHash)
+        public async Task<LoginResult> ValidateUserLogin(string email, string passwordHash)
         {
             string query = "SELECT * FROM Users WHERE email = @email";
 
@@ -161,16 +164,16 @@ namespace OnlyTutorsBackEnd.Repositories
 
 
                     if (user.Password.Trim() == passwordHash)
-                        return user.Id;
+                        return new LoginResult { UserId = user.Id, UserType = ""};
                     else
-                        return -1;
+                        return new LoginResult { UserId = -1, UserType= "none"};
                         
                 }
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
-                return -1;
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                return new LoginResult { UserId = -1, UserType = "none" }; ;
             }
         }
     }

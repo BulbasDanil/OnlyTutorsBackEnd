@@ -10,5 +10,6 @@
         public string PhoneNumber { get; set; }
         public DateTime DateOfBirth{ get; set; }
         public float Rating { get; set; }
+        public string ImagePath { get; set; }
     }
 }

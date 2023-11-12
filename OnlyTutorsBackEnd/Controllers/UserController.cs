@@ -32,7 +32,7 @@ namespace OnlyTutorsBackEnd.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "UserById")]
+        [HttpGet("{id}", Name = "GetUserById")]
         public async Task<IActionResult> GetUser(int id)
         {
             try
@@ -102,11 +102,11 @@ namespace OnlyTutorsBackEnd.Controllers
         {
             try
             {
-                int resultId = await _userRepository.ValidateUserLogin(email, password);
-                if (resultId == -1)
+                var loginResult = await _userRepository.ValidateUserLogin(email, password);
+                if (loginResult.UserId == -1)
                     throw new Exception("Wrong email or password");
 
-                return Ok(resultId);
+                return Ok(loginResult);
             }
             catch (Exception ex)
             {
