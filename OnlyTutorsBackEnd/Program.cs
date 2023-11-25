@@ -10,6 +10,10 @@ builder.Services.AddSingleton<DapperContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ITutorRepository, TutorRepository>();
+builder.Services.AddScoped<ILessonRepository, LessonRepository>();
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+
 
 builder.Services.AddControllers();
 

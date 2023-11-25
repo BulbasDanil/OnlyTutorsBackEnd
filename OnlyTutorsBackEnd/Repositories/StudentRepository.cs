@@ -16,7 +16,6 @@ namespace OnlyTutorsBackEnd.Repositories
             _userRepository = new UserRepository(context);
         }
 
-        // fix error, when returned student is equal to user id, when in db it is not
         public async Task<IEnumerable<Student>> GetStudents()
         {
             try
@@ -90,19 +89,19 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<int> UpdateStudent(Student student, int studentid)
+        public async Task<int> UpdateStudent(Student student, int userid)
         {
             try
             {
-                int updateResult = await _userRepository.UpdateUser(student, student.userId);
+                int updateResult = await _userRepository.UpdateUser(student, userid);
 
                 if (updateResult == -1)
                     throw new Exception("Error while updating user during student update");
 
-                string query = "UPDATE Students Set HighestLevelOfEducation=@HighestLevelOfEducation WHERE studentid = @studentid";
+                string query = "UPDATE Students Set HighestLevelOfEducation=@HighestLevelOfEducation WHERE userid = @userid";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("studentid", studentid, DbType.Int32);
+                parameters.Add("userid", userid, DbType.Int32);
                 parameters.Add("HighestLevelOfEducation", student.HighestLevelOfEducation, DbType.String);
                 
                 using (var connection = _context.CreateConnection())

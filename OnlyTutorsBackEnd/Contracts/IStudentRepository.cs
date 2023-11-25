@@ -8,7 +8,5 @@ namespace OnlyTutorsBackEnd.Contracts
         public Task<IEnumerable<Student>> GetStudentsByLesson(int lessonId);
         public Task<int> InsertStudent(Student student);
         public Task<int> UpdateStudent(Student student, int studentid);
-
-
     }
 }

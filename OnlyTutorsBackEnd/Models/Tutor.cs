@@ -2,7 +2,8 @@
 {
     public class Tutor : User
     {
-        public string Descprtion;
-        public string Experience;
+        public int userId { get; set; }
+        public string Descprtion { get; set; }
+        public string Experience { get; set; }
     }
 }

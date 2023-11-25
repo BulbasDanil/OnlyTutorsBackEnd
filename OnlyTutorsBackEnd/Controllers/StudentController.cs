@@ -70,7 +70,7 @@ namespace OnlyTutorsBackEnd.Controllers
         {
             try
             {
-                if (await _studentRepository.UpdateStudent(student, student.studentId) == -1)
+                if (await _studentRepository.UpdateStudent(student, student.userId) == -1)
                     throw new Exception("Cannot update student");
 
                 return Ok();
