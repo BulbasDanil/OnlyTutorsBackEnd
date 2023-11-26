@@ -164,9 +164,25 @@ namespace OnlyTutorsBackEnd.Repositories
 
 
                     if (user.Password.Trim() == passwordHash)
-                        return new LoginResult { UserId = user.Id, UserType = ""};
+                    {
+                        string usertype;
+
+                        query = "SELECT * FROM Students WHERE userid = @userid";
+                        parameters = new DynamicParameters();
+                        parameters.Add("userid", user.Id);
+
+                        var results = await connection.QueryAsync<User>(query, parameters);
+
+                        if (results.Count() > 0)
+                            usertype = "Student";
+                        else
+                            usertype = "Tutor";
+
+
+                        return new LoginResult { UserId = user.Id, UserType = usertype };
+                    }
                     else
-                        return new LoginResult { UserId = -1, UserType= "none"};
+                        return new LoginResult { UserId = -1, UserType = "none" };
                         
                 }
             }

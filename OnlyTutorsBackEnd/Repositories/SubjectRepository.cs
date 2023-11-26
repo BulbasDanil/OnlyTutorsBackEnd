@@ -44,7 +44,7 @@ namespace OnlyTutorsBackEnd.Repositories
 
                 using (var connection = _context.CreateConnection())
                 {
-                    var subject = (await connection.QueryAsync<Subject>(query)).First();
+                    var subject = (await connection.QueryAsync<Subject>(query, parameters)).First();
                     return subject;
                 }
             }
@@ -62,7 +62,7 @@ namespace OnlyTutorsBackEnd.Repositories
                 string query = "INSERT INTO Subjects (name, complexity) VALUES (@name, @complexity)";
 
                 var parameters = new DynamicParameters();
-                parameters.Add("name", subject.Name, DbType.Int32);
+                parameters.Add("name", subject.Name, DbType.String);
                 parameters.Add("complexity", subject.Complexity, DbType.Decimal);
 
                 using (var connection = _context.CreateConnection())

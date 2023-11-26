@@ -66,7 +66,7 @@ namespace OnlyTutorsBackEnd.Controllers
             }
         }
 
-        [HttpPost("/api/lessons/")]
+        [HttpPost("/api/lessons/addstudent")]
         public async Task<IActionResult> CreateStundetLesson(int studentid, int lessonid)
         {
             try

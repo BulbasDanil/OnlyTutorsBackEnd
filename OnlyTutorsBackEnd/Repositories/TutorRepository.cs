@@ -92,7 +92,7 @@ namespace OnlyTutorsBackEnd.Repositories
 
                 var parameters = new DynamicParameters();
                 parameters.Add("userId", userId, DbType.Int32);
-                parameters.Add("description", tutor.Descprtion, DbType.String);
+                parameters.Add("description", tutor.Description, DbType.String);
                 parameters.Add("experience", tutor.Experience, DbType.String);
 
                 using (var connection = _context.CreateConnection())
@@ -124,7 +124,7 @@ namespace OnlyTutorsBackEnd.Repositories
 
                 var parameters = new DynamicParameters();
                 parameters.Add("userId", userId, DbType.Int32);
-                parameters.Add("description", tutor.Descprtion, DbType.String);
+                parameters.Add("description", tutor.Description, DbType.String);
                 parameters.Add("experience", tutor.Experience, DbType.String);
 
                 using (var connection = _context.CreateConnection())
