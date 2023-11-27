@@ -42,4 +42,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.Run("https://localhost:7185");
+app.Run();
