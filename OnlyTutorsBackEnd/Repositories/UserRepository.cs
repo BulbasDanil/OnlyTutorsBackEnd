@@ -166,9 +166,6 @@ namespace OnlyTutorsBackEnd.Repositories
 
                     if (result.Count() > 0)
                         user = result.First();
-                    else
-                        throw new Exception("No matching user found");
-
 
                     if (user.Password.Trim() == passwordHash)
                     {
@@ -181,9 +178,9 @@ namespace OnlyTutorsBackEnd.Repositories
                         var results = await connection.QueryAsync<User>(query, parameters);
 
                         if (results.Count() > 0)
-                            usertype = "Student";
+                            usertype = "student";
                         else
-                            usertype = "Tutor";
+                            usertype = "tutor";
 
 
                         return new LoginResult { UserId = user.Id, UserType = usertype };

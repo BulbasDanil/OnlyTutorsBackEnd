@@ -110,7 +110,7 @@ namespace OnlyTutorsBackEnd.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(201, new LoginResult() { UserId=-1, UserType="none"});
             }
         }
     }
