@@ -61,7 +61,7 @@ namespace OnlyTutorsBackEnd.Repositories
         {
             try
             {
-                string query = "SELECT * FROM GetTutorByName('@search') UNION SELECT * FROM GetTutorBySubject('@search')";
+                string query = "SELECT * FROM GetTutorByName(@search) UNION SELECT * FROM GetTutorBySubject(@search);";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("search", searchString, DbType.String);

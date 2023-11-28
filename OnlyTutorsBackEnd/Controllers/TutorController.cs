@@ -50,7 +50,7 @@ namespace OnlyTutorsBackEnd.Controllers
             }
         }
 
-        [HttpGet("/tutors/search/", Name = "SearchForTutor")]
+        [HttpGet("/tutors/search/{searchString}", Name = "SearchForTutor")]
         public async Task<IActionResult> SearchForTutor(string searchString)
         {
             try
