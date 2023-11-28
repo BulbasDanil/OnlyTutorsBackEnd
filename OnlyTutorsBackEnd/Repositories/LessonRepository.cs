@@ -8,10 +8,11 @@ namespace OnlyTutorsBackEnd.Repositories
     public class LessonRepository : ILessonRepository
     {
         private DapperContext _context;
-
-        public LessonRepository(DapperContext context)
+        private IStudentRepository _studentRepository;
+        public LessonRepository(DapperContext context, IStudentRepository studentRepository)
         {
             _context = context;
+            _studentRepository = studentRepository;
         }
 
         public async Task<IEnumerable<Lesson>> GetLessons()
@@ -20,16 +21,24 @@ namespace OnlyTutorsBackEnd.Repositories
             {
                 string query = "SELECT * FROM Lessons NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery;";
 
+                List<ViewLessson> lessons = new List<ViewLessson>();
+
                 using (var connection = _context.CreateConnection())
                 {
-                    var lessons = await connection.QueryAsync<Lesson>(query);
-                    return lessons.ToList();
+                    lessons = (await connection.QueryAsync<ViewLessson>(query)).ToList();
                 }
+
+                for (int i = 0; i < lessons.Count(); i++)
+                {
+                    lessons[i].Students = (await _studentRepository.GetStudentsByLesson(lessons[i].Id)).ToList();
+                }
+
+                return lessons;
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
-                return Enumerable.Empty<Lesson>();
+                return Enumerable.Empty<ViewLessson>();
             }
         }
 
@@ -65,7 +74,7 @@ namespace OnlyTutorsBackEnd.Repositories
                 parameters.Add("name", lesson.Name, DbType.String);
                 parameters.Add("subjectid", lesson.SubjectId, DbType.Int32);
                 parameters.Add("description", lesson.Description, DbType.String);
-                parameters.Add("time", lesson.Time, DbType.DateTime);
+                parameters.Add("time", lesson.Time, DbType.DateTime2);
                 parameters.Add("@tutorid", lesson.tutorid, DbType.Int32);
 
                 using (var connection = _context.CreateConnection())

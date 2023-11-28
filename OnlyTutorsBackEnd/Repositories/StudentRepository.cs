@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using OnlyTutorsBackEnd.Contracts;
 using OnlyTutorsBackEnd.Models;
+using OnlyTutorsBackEnd.ModelsViews;
 using System.Data;
 
 namespace OnlyTutorsBackEnd.Repositories
@@ -35,7 +36,7 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<IEnumerable<Student>> GetStudentsByLesson(int lessonId)
+        public async Task<IEnumerable<ViewStudent>> GetStudentsByLesson(int lessonId)
         {
             try
             {
@@ -47,14 +48,14 @@ namespace OnlyTutorsBackEnd.Repositories
 
                 using (var connection = _context.CreateConnection())
                 {
-                    var students = await connection.QueryAsync<Student>(query, parameters);
+                    var students = await connection.QueryAsync<ViewStudent>(query, parameters);
                     return students.ToList();
                 }
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
-                return Enumerable.Empty<Student>();
+                return Enumerable.Empty<ViewStudent>();
             }
         }
 

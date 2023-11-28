@@ -8,6 +8,5 @@
         public DateTime Time { get; set; }
         public int tutorid { get; set; }
         public int SubjectId { get; set; }
-        public string Subjectname { get; set; }
     }
 }
