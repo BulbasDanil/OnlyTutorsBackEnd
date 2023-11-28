@@ -123,8 +123,8 @@ namespace OnlyTutorsBackEnd.Repositories
         {
             try
             {
-                string query = "SELECT * FROM (SELECT * FROM GetLessonByName(@search) UNION SELECT * FROM GetLessonByTutor(@search) UNION SELECT * FROM GetLessonBySubject(@search))" +
-                    "NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery;";
+                string query = "SELECT * FROM (SELECT * FROM GetLessonByName(@search) UNION SELECT * FROM GetLessonByTutor(@search) UNION SELECT * FROM GetLessonBySubject(@search)) AS Subquery1 " +
+                    "NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery2;";
 
 
                 var parameters = new DynamicParameters();
