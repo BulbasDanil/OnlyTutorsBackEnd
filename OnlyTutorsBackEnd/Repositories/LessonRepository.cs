@@ -18,7 +18,7 @@ namespace OnlyTutorsBackEnd.Repositories
         {
             try
             {
-                string query = "SELECT * FROM Lessons";
+                string query = "SELECT * FROM Lessons NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery;";
 
                 using (var connection = _context.CreateConnection())
                 {

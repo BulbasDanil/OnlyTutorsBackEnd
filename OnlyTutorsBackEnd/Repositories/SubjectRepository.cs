@@ -37,7 +37,7 @@ namespace OnlyTutorsBackEnd.Repositories
         {
             try
             {
-                string query = "SELECT * FROM Subjects JOIN Lessons ON Subjects.id = Lessons.subjectid WHERE Lessons.id = @lessonid";
+                string query = "SELECT Subjects.id, Subjects.name, Subjects.complexity FROM Subjects JOIN Lessons ON Subjects.id = Lessons.subjectid WHERE Lessons.id = @lessonid";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("lessonid", lessonid, DbType.Int32);
