@@ -119,7 +119,7 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<IEnumerable<Lesson>> SearchForLessons(string searchString)
+        public async Task<IEnumerable<ViewLessson>> SearchForLessons(string searchString)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace OnlyTutorsBackEnd.Repositories
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
-                return Enumerable.Empty<Lesson>();
+                return Enumerable.Empty<ViewLessson>();
             }
         }
     }
