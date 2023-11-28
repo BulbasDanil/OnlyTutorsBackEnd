@@ -119,11 +119,12 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<IEnumerable<ViewLessson>> SearchForLessons(string searchString)
+        public async Task<IEnumerable<Lesson>> SearchForLessons(string searchString)
         {
             try
             {
-                string query = "SELECT * FROM GetLessonByName(@search) UNION SELECT * FROM GetLessonByTutor(@search) UNION SELECT * FROM GetLessonBySubject(@search)";
+                string query = "SELECT * FROM (SELECT * FROM GetLessonByName(@search) UNION SELECT * FROM GetLessonByTutor(@search) UNION SELECT * FROM GetLessonBySubject(@search))" +
+                    "NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery;";
 
 
                 var parameters = new DynamicParameters();
