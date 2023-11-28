@@ -129,11 +129,19 @@ namespace OnlyTutorsBackEnd.Repositories
                 var parameters = new DynamicParameters();
                 parameters.Add("search", searchString, DbType.String);
 
+                List<ViewLessson> lessons = new List<ViewLessson>();
+
                 using (var connection = _context.CreateConnection())
                 {
-                    var lessons = await connection.QueryAsync<Lesson>(query,parameters);
-                    return lessons.ToList();
+                    lessons = (await connection.QueryAsync<ViewLessson>(query, parameters)).ToList();
                 }
+
+                for (int i = 0; i < lessons.Count(); i++)
+                {
+                    lessons[i].Students = (await _studentRepository.GetStudentsByLesson(lessons[i].Id)).ToList();
+                }
+
+                return lessons;
             }
             catch (Exception ex)
             {
