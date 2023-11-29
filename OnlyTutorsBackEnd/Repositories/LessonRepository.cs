@@ -144,12 +144,26 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<IEnumerable<Lesson>> SearchForLessons(string searchString)
+        public async Task<IEnumerable<Lesson>> SearchForLessons(string searchString, int openOnly)
         {
             try
             {
-                string query = "SELECT * FROM (SELECT * FROM GetLessonByName(@search) UNION SELECT * FROM GetLessonByTutor(@search) UNION SELECT * FROM GetLessonBySubject(@search)) AS Subquery1 " +
+                string query;
+                if (openOnly == 0)
+                {
+                    query = "SELECT * FROM (SELECT * FROM GetLessonByName(@search) UNION SELECT * FROM GetLessonByTutor(@search) UNION SELECT * FROM GetLessonBySubject(@search)) AS Subquery1 " +
                     "NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery2;";
+                }
+                else if(openOnly == 1)
+                {
+                    query = "SELECT * FROM (SELECT * FROM GetOpenLessonByName(@search) UNION SELECT * FROM GetOpenLessonByTutor(@search) UNION SELECT * FROM GetOpenLessonBySubject(@search)) AS Subquery1 " +
+                    "NATURAL JOIN (SELECT id as subjectid, name as subjectname FROM Subjects) AS Subquery2;";
+                }
+                else
+                {
+                    throw new Exception("No open filter was provided");
+                }
+                
 
 
                 var parameters = new DynamicParameters();

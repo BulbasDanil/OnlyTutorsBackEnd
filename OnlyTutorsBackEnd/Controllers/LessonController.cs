@@ -33,12 +33,12 @@ namespace OnlyTutorsBackEnd.Controllers
             }
         }
 
-        [HttpGet("/api/lessons/search/{searchString}", Name = "SearchForLesson")]
-        public async Task<IActionResult> SearchForLesson(string searchString)
+        [HttpGet("/api/lessons/search/{searchString}/{openOnly}", Name = "SearchForLesson")]
+        public async Task<IActionResult> SearchForLesson(string searchString, int openOnly)
         {
             try
             {
-                var lessons = await _lessonRepository.SearchForLessons(searchString);
+                var lessons = await _lessonRepository.SearchForLessons(searchString, openOnly);
                 if (lessons == null)
                     return NotFound();
 
