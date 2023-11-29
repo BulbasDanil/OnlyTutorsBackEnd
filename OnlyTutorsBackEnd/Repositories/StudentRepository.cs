@@ -17,6 +17,28 @@ namespace OnlyTutorsBackEnd.Repositories
             _userRepository = new UserRepository(context);
         }
 
+        public async Task<Student> GetStudentById(int userId)
+        {
+            try
+            {
+                string query = "SELECT * FROM Students JOIN Users ON Students.userid = Users.id WHERE userId = @userId";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("userId", userId, DbType.Int32);
+
+                using (var connection = _context.CreateConnection())
+                {
+                    var student = (await connection.QueryAsync<Student>(query, parameters)).First();
+                    return student;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                return null;
+            }
+        }
+
         public async Task<IEnumerable<Student>> GetStudents()
         {
             try

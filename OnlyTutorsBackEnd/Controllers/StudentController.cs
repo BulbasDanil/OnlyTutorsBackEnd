@@ -32,7 +32,24 @@ namespace OnlyTutorsBackEnd.Controllers
             }
         }
 
-        [HttpGet("{lessondId}", Name ="GetStudentByLessonId")]
+        [HttpGet("{studentid}", Name = "GetStudentById")]
+        public async Task<IActionResult> GetStudentById(int studentid)
+        {
+            try
+            {
+                var student = await _studentRepository.GetStudentById(studentid);
+                if (student == null)
+                    return NotFound();
+
+                return Ok(student);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("/lesson/{lessondId}", Name ="GetStudentByLessonId")]
         public async Task<IActionResult> GetStudentsByLesson(int lessondId)
         {
             try
