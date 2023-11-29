@@ -98,5 +98,21 @@ namespace OnlyTutorsBackEnd.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpDelete("/api/lessons/removestudent")]
+        public async Task<IActionResult> DeleteStudentLesson(int studentid, int lessonid)
+        {
+            try
+            {
+                if (await _lessonRepository.RemoveStudentLessons(studentid, lessonid) == -1)
+                    throw new Exception("Cannot remove student from lesson");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

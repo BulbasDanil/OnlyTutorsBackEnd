@@ -9,5 +9,6 @@ namespace OnlyTutorsBackEnd.Contracts
         public Task<int> InsertLesson (Lesson lesson);
         public Task<int> InsertStudentLessons(int studentid, int lessonid);
         public Task<IEnumerable<Student>> GetAllLessonStudents(int lessonid);
+        public Task<int> RemoveStudentLessons(int studentid, int lessonid);
     }
 }

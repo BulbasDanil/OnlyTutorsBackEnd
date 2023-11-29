@@ -118,6 +118,31 @@ namespace OnlyTutorsBackEnd.Repositories
                 return -1;
             }
         }
+        public async Task<int> RemoveStudentLessons(int studentid, int lessonid)
+        {
+            try
+            {
+                string query = "DELETE FROM StudentLessons WHERE studentid = @studentid and lessonid = @lessonid;";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("studentid", studentid, DbType.Int32);
+                parameters.Add("lessonid", lessonid, DbType.Int32);
+
+                using (var connection = _context.CreateConnection())
+                {
+                    if (await connection.ExecuteAsync(query, parameters) > 0)
+                        return 1;
+                    else
+                        return -1;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                return -1;
+            }
+        }
 
         public async Task<IEnumerable<Lesson>> SearchForLessons(string searchString)
         {
