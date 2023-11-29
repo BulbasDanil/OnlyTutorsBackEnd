@@ -112,7 +112,7 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<int> UpdateStudent(Student student, int userid)
+        public async Task<int> UpdateStudent(UpdateStudent student, int userid)
         {
             try
             {

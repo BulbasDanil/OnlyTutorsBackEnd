@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlyTutorsBackEnd.Contracts;
 using OnlyTutorsBackEnd.Models;
+using OnlyTutorsBackEnd.ModelsViews;
 
 namespace OnlyTutorsBackEnd.Controllers
 {
@@ -84,11 +85,11 @@ namespace OnlyTutorsBackEnd.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutTutor(Tutor tutor)
+        public async Task<IActionResult> PutTutor(UpdateTutor tutor)
         {
             try
             {
-                if (await _tutorRepository.UpdateTutor(tutor, tutor.userId) == -1)
+                if (await _tutorRepository.UpdateTutor(tutor, tutor.Id) == -1)
                     throw new Exception("Cannot update tutor");
 
                 return Ok();

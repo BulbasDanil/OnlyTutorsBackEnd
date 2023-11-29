@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using OnlyTutorsBackEnd.Contracts;
 using OnlyTutorsBackEnd.Models;
+using OnlyTutorsBackEnd.ModelsViews;
 using System.Data;
 
 namespace OnlyTutorsBackEnd.Repositories
@@ -90,22 +91,18 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<int> UpdateUser(User user, int userid)
+        public async Task<int> UpdateUser(UpdateUser user, int userid)
         {
             string query = "UPDATE Users Set " +
-                "Name = @Name, Surname = @Surname, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber, DateOfBirth = @DateOfBirth, Rating = @Rating, ImagePath = @ImagePath " +
-                "WHERE Id = @userid";
+                "Name = @Name, Surname = @Surname, PhoneNumber = @PhoneNumber, DateOfBirth = @DateOfBirth " +
+                "WHERE Id = @userid;";
             
             var parameters = new DynamicParameters();
             parameters.Add("Name", user.Name, DbType.String);
             parameters.Add("Surname", user.Surname, DbType.String);
-            parameters.Add("Email", user.Email, DbType.String);
-            parameters.Add("Password", user.Password, DbType.String);
             parameters.Add("PhoneNumber", user.PhoneNumber, DbType.String);
             parameters.Add("DateOfBirth", user.DateOfBirth, DbType.Date);
             parameters.Add("userid", userid, DbType.Int32);
-            parameters.Add("Rating", user.Rating, DbType.Decimal);
-            parameters.Add("ImagePath", user.ImagePath, DbType.String);
 
             try
             {

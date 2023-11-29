@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlyTutorsBackEnd.Contracts;
 using OnlyTutorsBackEnd.Models;
+using OnlyTutorsBackEnd.ModelsViews;
 
 namespace OnlyTutorsBackEnd.Controllers
 {
@@ -66,7 +67,7 @@ namespace OnlyTutorsBackEnd.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutUser(User user)
+        public async Task<IActionResult> PutUser(UpdateUser user)
         {
             try
             {

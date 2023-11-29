@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using OnlyTutorsBackEnd.Contracts;
 using OnlyTutorsBackEnd.Models;
+using OnlyTutorsBackEnd.ModelsViews;
 using System.Data;
 
 namespace OnlyTutorsBackEnd.Repositories
@@ -111,7 +112,7 @@ namespace OnlyTutorsBackEnd.Repositories
             }
         }
 
-        public async Task<int> UpdateTutor(Tutor tutor, int userId)
+        public async Task<int> UpdateTutor(UpdateTutor tutor, int userId)
         {
             try
             {
