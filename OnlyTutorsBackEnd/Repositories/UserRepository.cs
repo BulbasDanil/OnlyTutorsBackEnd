@@ -94,14 +94,13 @@ namespace OnlyTutorsBackEnd.Repositories
         public async Task<int> UpdateUser(UpdateUser user, int userid)
         {
             string query = "UPDATE Users Set " +
-                "Name = @Name, Surname = @Surname, PhoneNumber = @PhoneNumber, DateOfBirth = @DateOfBirth " +
+                "Name = @Name, Surname = @Surname, PhoneNumber = @PhoneNumber " +
                 "WHERE Id = @userid;";
             
             var parameters = new DynamicParameters();
             parameters.Add("Name", user.Name, DbType.String);
             parameters.Add("Surname", user.Surname, DbType.String);
             parameters.Add("PhoneNumber", user.PhoneNumber, DbType.String);
-            parameters.Add("DateOfBirth", user.DateOfBirth, DbType.Date);
             parameters.Add("userid", userid, DbType.Int32);
 
             try
